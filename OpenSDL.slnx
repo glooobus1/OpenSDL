@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="OpenSDL/OpenSDL.vcxproj" Id="5f441eff-0fcd-4f76-b093-488e5da1ab89" />
+</Solution>
