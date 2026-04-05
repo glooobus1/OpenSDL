@@ -15,6 +15,10 @@ struct ObjMesh {
     bool hasNormals = false;
     bool hasUVs = false;
     bool hasColors = false;
+    static bool s_shadowPass;
+
+    static void beginShadowPass() { s_shadowPass = true; }
+    static void endShadowPass() { s_shadowPass = false; }
 
     void draw() const {
         if (vertices.empty()) return;
@@ -24,13 +28,14 @@ struct ObjMesh {
             for (int j = 0; j < 3; j++) {
                 int idx = indices[i + j];
 
-                if (hasColors && !vertexColors.empty()) {
-                    const Color& c = vertexColors[idx];
-                    glColor4f(c.r, c.g, c.b, c.a);
-                }
-
                 if (hasNormals && !normals.empty()) {
                     glNormal3f(normals[idx].x, normals[idx].y, normals[idx].z);
+                }
+
+                // ТОЛЬКО если НЕ в режиме тени — используем цвета объектов
+                if (!s_shadowPass && hasColors && !vertexColors.empty()) {
+                    const Color& c = vertexColors[idx];
+                    glColor4f(c.r, c.g, c.b, c.a);
                 }
 
                 if (hasUVs && !uvs.empty()) {

@@ -134,28 +134,43 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhysicsWorld.cpp" />
     <ClCompile Include="SimpleSDL.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="StandartOpenGlRender.cpp" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CameraController.hpp" />
+    <ClInclude Include="CameraObject.hpp" />
+    <ClInclude Include="Collider.hpp" />
     <ClInclude Include="color.hpp" />
     <ClInclude Include="Cube.hpp" />
     <ClInclude Include="DebagLogSystem.hpp" />
+    <ClInclude Include="InputController.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="mat4.hpp" />
     <ClInclude Include="Material.hpp" />
+    <ClInclude Include="Mesh.hpp" />
     <ClInclude Include="ObjLoader.hpp" />
     <ClInclude Include="ObjMesh.hpp" />
+    <ClInclude Include="PhysicsWorld.hpp" />
     <ClInclude Include="Plane.hpp" />
+    <ClInclude Include="WhiteSphere.hpp" />
     <ClInclude Include="quat.hpp" />
+    <ClInclude Include="Rigidbody.hpp" />
     <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="ShadowMap.hpp" />
     <ClInclude Include="SimpleRenderOpenSDL.h" />
     <ClInclude Include="SimpleSDL.hpp" />
+    <ClInclude Include="SimpleSky.hpp" />
     <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="StandartOpenGlRender.hpp" />
+    <ClInclude Include="Sun.hpp" />
+    <ClInclude Include="SunSprite.hpp" />
+    <ClInclude Include="TextRenderer.hpp" />
     <ClInclude Include="Texture.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="vec2.hpp" />
@@ -165,10 +180,25 @@
   <ItemGroup>
     <None Include="basic.frag" />
     <None Include="basic.vert" />
+    <None Include="MainShader.frag" />
+    <None Include="MainShader.vert" />
+    <None Include="main_shader.frag" />
+    <None Include="main_shader.vert" />
     <None Include="noise.frag" />
     <None Include="noise.vert" />
     <None Include="pulse.frag" />
     <None Include="pulse.vert" />
+    <None Include="shadow.frag" />
+    <None Include="shadow.vert" />
+    <None Include="ShadowShader.frag" />
+    <None Include="ShadowShader.vert" />
+    <None Include="shadow_debug.frag" />
+    <None Include="shadow_mapping.frag" />
+    <None Include="shadow_mapping.vert" />
+    <None Include="shadow_shader.frag" />
+    <None Include="shadow_shader.vert" />
+    <None Include="SkyShader.frag" />
+    <None Include="SkyShader.vert" />
     <None Include="texture.frag" />
     <None Include="texture.vert" />
     <None Include="vertex_color.frag" />

@@ -21,6 +21,7 @@
 #include "shader.hpp"
 #include "material.hpp"
 #include "texture.hpp"
+#include "Sun.hpp"
 
 // Рендерер
 #include "StandartOpenGlRender.hpp"

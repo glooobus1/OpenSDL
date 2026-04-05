@@ -2,27 +2,48 @@
 #include <SDL3/SDL.h>
 #include "camera.hpp"
 #include "transform.hpp"
+#include "ShadowMap.hpp"
+#include "Shader.hpp"
+#include "ObjMesh.hpp"
+#include "Collider.hpp"
+#include <functional> 
 #include <vector>
 #include <memory>
+#include "TextRenderer.hpp" 
+#include "PhysicsWorld.hpp"
+#include "Rigidbody.hpp"
 
 // Базовый класс для всех объектов сцены
 class SceneObject {
 public:
     Transform transform;
+    Rigidbody rigidbody;
+    Collider collider;
+
     virtual void render() = 0;
     virtual void update(float deltaTime) {}
     virtual ~SceneObject() {}
+
+    void setColliderSize(const vec3& halfSize) {
+        collider.setBox(halfSize);
+    }
+
+    void setColliderRadius(float radius) {
+        collider.setSphere(radius);
+    }
 };
 
 // Стандартный рендерер
 class StandartOpenGlRender {
 private:
+    TextRenderer m_textRenderer;
     SDL_Window* window = nullptr;
     SDL_GLContext glContext = nullptr;
     int windowWidth = 800;
     int windowHeight = 600;
     bool running = true;
 
+    PhysicsWorld m_physicsWorld;
     Camera camera;
     std::vector<std::unique_ptr<SceneObject>> sceneObjects;
 
@@ -31,24 +52,29 @@ private:
     int fps = 0;
     int frameCount = 0;
 
-    // Параметры управления камерой
-    float cameraMoveSpeed = 5.0f;
-    float mouseSensitivity = 0.005f;
-    bool rightMouseDown = false;
+    // Тени
+    ShadowMap shadowMap;
+    Shader shadowShader;
+    Shader mainShader;
+    bool shadowsEnabled = true;
 
-    // Углы поворота камеры (радианы)
-    float cameraYaw = 0.0f;
-    float cameraPitch = 0.0f;
+    std::function<void(float)> m_updateCallback;
+    std::function<void(float)> m_fixedUpdateCallback;
+    float m_fixedTimestep = 1.0f / 60.0f;
+    float m_accumulator = 0.0f;
 
 public:
+    TextRenderer& getTextRenderer() { return m_textRenderer; }
     StandartOpenGlRender();
     ~StandartOpenGlRender();
+
+    PhysicsWorld& getPhysicsWorld() { return m_physicsWorld; }
 
     bool init(int width = 800, int height = 600, const char* title = "3D Engine");
     void run();
     void stop();
+    void setWindowTitle(const std::string& title);
 
-    // Добавление объектов в сцену
     template<typename T, typename... Args>
     T* addObject(Args&&... args) {
         auto obj = std::make_unique<T>(std::forward<Args>(args)...);
@@ -57,7 +83,24 @@ public:
         return ptr;
     }
 
+    void setUpdateCallback(std::function<void(float deltaTime)> callback) {
+        m_updateCallback = callback;
+    }
+
+    void setFixedUpdateCallback(std::function<void(float deltaTime)> callback) {
+        m_fixedUpdateCallback = callback;
+    }
+
+    void setFixedTimestep(float timestep) {
+        m_fixedTimestep = timestep;
+    }
+
+    void setShadowsEnabled(bool enabled) { shadowsEnabled = enabled; }
+
+    // ОДИН РАЗ - ТОЛЬКО ЗДЕСЬ!
     Camera& getCamera() { return camera; }
+
+    SDL_Window* getWindow() { return window; }
     bool isRunning() const { return running; }
     int getFPS() const { return fps; }
     float getDeltaTime() const { return deltaTime; }

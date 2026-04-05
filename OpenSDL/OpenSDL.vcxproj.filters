@@ -42,6 +42,12 @@
     <ClCompile Include="StandartOpenGlRender.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsWorld.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleSDL.hpp">
@@ -107,6 +113,45 @@
     <ClInclude Include="ObjMesh.hpp">
       <Filter>StandartOBJ</Filter>
     </ClInclude>
+    <ClInclude Include="Sun.hpp">
+      <Filter>StandartOBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMap.hpp">
+      <Filter>Исходные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.hpp">
+      <Filter>Исходные файлы\assets</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsWorld.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraObject.hpp">
+      <Filter>StandartOBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleSky.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SunSprite.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteSphere.hpp">
+      <Filter>StandartOBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="basic.vert">
@@ -137,6 +182,51 @@
       <Filter>Исходные файлы\assets\shaders</Filter>
     </None>
     <None Include="pulse.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow_mapping.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow_debug.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow_mapping.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow_shader.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="shadow_shader.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="main_shader.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="main_shader.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="ShadowShader.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="MainShader.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="MainShader.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="ShadowShader.frag">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="SkyShader.vert">
+      <Filter>Исходные файлы\assets\shaders</Filter>
+    </None>
+    <None Include="SkyShader.frag">
       <Filter>Исходные файлы\assets\shaders</Filter>
     </None>
   </ItemGroup>

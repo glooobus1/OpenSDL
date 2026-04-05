@@ -9,16 +9,17 @@ class Camera {
 private:
     Transform transform;
     float fov;           // поле зрения в градусах
+    float fovStandard;   // стандартное FOV
+    float fovOffset;     // смещение для прицеливания
     float nearPlane;     // ближняя плоскость отсечения
     float farPlane;      // дальняя плоскость отсечения
 
-
 public:
     // Конструктор
-    Camera() : fov(60.0f), nearPlane(0.1f), farPlane(1000.0f) {}
+    Camera() : fov(80.0f), fovStandard(80.0f), fovOffset(0.0f), nearPlane(0.1f), farPlane(1000.0f) {}
 
     Camera(float fov, float nearPlane, float farPlane)
-        : fov(fov), nearPlane(nearPlane), farPlane(farPlane) {
+        : fov(fov), fovStandard(fov), fovOffset(0.0f), nearPlane(nearPlane), farPlane(farPlane) {
     }
 
     // Управление трансформацией камеры
@@ -29,20 +30,14 @@ public:
 
     // Получение матриц
     mat4 getViewMatrix() const {
-        // Дополнительный поворот на 90 градусов вокруг оси Y,
-        // чтобы "игрок" был как будто развернут на 90°
-        quat extraYaw = quat::fromAxisAngle(vec3(0, 1, 0), 3.14159f * 0.5f);
-        quat viewRot = extraYaw * transform.rotation;
-
-        // Правильный порядок для вида: сначала поворот, потом перенос
-        mat4 rot = viewRot.toMatrix().transpose();
+        mat4 rot = transform.rotation.toMatrix().transpose();
         mat4 trans = mat4::translation(-transform.position);
         return rot * trans;
     }
 
     mat4 getProjectionMatrix(float aspect) const {
         return mat4::perspective(
-            fov * 3.14159f / 180.0f,  // в радианы
+            (fovStandard + fovOffset) * 3.14159f / 180.0f,
             aspect,
             nearPlane,
             farPlane
@@ -59,9 +54,31 @@ public:
         transform.lookAt(target, vec3(0, 1, 0));
     }
 
-    // Геттеры/сеттеры
-    float getFov() const { return fov; }
-    void setFov(float f) { fov = f; }
+    // Управление FOV
+    float getFov() const { return fovStandard + fovOffset; }
+    void setFov(float f) {
+        fovStandard = f;
+        if (fovStandard < 10.0f) fovStandard = 10.0f;
+        if (fovStandard > 120.0f) fovStandard = 120.0f;
+    }
+
+    void setAiming(bool aiming) {
+        if (aiming) {
+            fovOffset = -40.0f;
+        }
+        else {
+            fovOffset = 0.0f;
+        }
+    }
+
+    void addFovOffset(float delta) {
+        fovOffset += delta;
+        if (fovOffset > 0.0f) fovOffset = 0.0f;
+        if (fovOffset < -fovStandard) fovOffset = -fovStandard;
+    }
+
+    float getFovOffset() const { return fovOffset; }
+    float getFovStandard() const { return fovStandard; }
 
     Transform& getTransform() { return transform; }
     const Transform& getTransform() const { return transform; }
