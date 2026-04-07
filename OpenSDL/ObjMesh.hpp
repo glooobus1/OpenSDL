@@ -1,7 +1,7 @@
 #pragma once
-#include "../vec3.hpp"
-#include "../color.hpp"
-#include "../vec2.hpp"
+#include "vec3.hpp"
+#include "color.hpp"
+#include "vec2.hpp"
 #include <vector>
 #include <GL/glew.h>
 

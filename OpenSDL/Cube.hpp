@@ -1,5 +1,5 @@
 #pragma once
-#include "StandartOpenGlRender.hpp"
+#include "SceneObject.hpp"
 #include "Mesh.hpp"
 
 class Cube : public SceneObject {
@@ -35,7 +35,6 @@ public:
     void render() override { mesh.draw(); }
 
     void setColor(const Color& color) {
-        // Для VBO нужно перезагрузить данные
         std::vector<vec3> vertices = {
             vec3(-1, -1, -1), vec3(1, -1, -1), vec3(1,  1, -1), vec3(-1,  1, -1),
             vec3(-1, -1,  1), vec3(1, -1,  1), vec3(1,  1,  1), vec3(-1,  1,  1)

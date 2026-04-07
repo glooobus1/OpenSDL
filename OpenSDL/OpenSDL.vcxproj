@@ -105,13 +105,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\StandartOBJ;C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\GLEW\include;$(SolutionDir);$(SolutionDir)StandartOBJ;C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)OpenSDL\GLEW\include;$(SolutionDir)OpenSDL\SDL3\include;$(SolutionDir)OpenSDL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL3.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\GLEW\lib\Release\x64;C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;SDL3.lib;opengl32.lib;glu32.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)OpenSDL\GLEW\lib\Release\x64;$(SolutionDir)OpenSDL\SDL3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,13 +123,13 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\StandartOBJ;C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\GLEW\include;$(SolutionDir);$(SolutionDir)StandartOBJ;C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)OpenSDL\GLEW\include;$(SolutionDir)OpenSDL\SDL3\include;$(SolutionDir)OpenSDL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL3.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\GLEW\lib\Release\x64;C:\Users\ZXC\source\repos\OpenSDL\OpenSDL\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;SDL3.lib;opengl32.lib;glu32.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)OpenSDL\GLEW\lib\Release\x64;$(SolutionDir)OpenSDL\SDL3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -137,6 +137,7 @@
     <ClCompile Include="PhysicsWorld.cpp" />
     <ClCompile Include="SimpleSDL.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="StandartOpenGlRender.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -158,6 +159,9 @@
     <ClInclude Include="ObjMesh.hpp" />
     <ClInclude Include="PhysicsWorld.hpp" />
     <ClInclude Include="Plane.hpp" />
+    <ClInclude Include="SceneObject.hpp" />
+    <ClInclude Include="SkyTexture.hpp" />
+    <ClInclude Include="SoundSystem.hpp" />
     <ClInclude Include="WhiteSphere.hpp" />
     <ClInclude Include="quat.hpp" />
     <ClInclude Include="Rigidbody.hpp" />
@@ -165,7 +169,6 @@
     <ClInclude Include="ShadowMap.hpp" />
     <ClInclude Include="SimpleRenderOpenSDL.h" />
     <ClInclude Include="SimpleSDL.hpp" />
-    <ClInclude Include="SimpleSky.hpp" />
     <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="StandartOpenGlRender.hpp" />
     <ClInclude Include="Sun.hpp" />

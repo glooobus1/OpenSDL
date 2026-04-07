@@ -12,28 +12,13 @@
 #include "TextRenderer.hpp" 
 #include "PhysicsWorld.hpp"
 #include "Rigidbody.hpp"
+#include "SceneObject.hpp"
+#include "SkyTexture.hpp"
 
-// Базовый класс для всех объектов сцены
-class SceneObject {
-public:
-    Transform transform;
-    Rigidbody rigidbody;
-    Collider collider;
+// Forward declaration
+class CameraObject;
+class Sun;
 
-    virtual void render() = 0;
-    virtual void update(float deltaTime) {}
-    virtual ~SceneObject() {}
-
-    void setColliderSize(const vec3& halfSize) {
-        collider.setBox(halfSize);
-    }
-
-    void setColliderRadius(float radius) {
-        collider.setSphere(radius);
-    }
-};
-
-// Стандартный рендерер
 class StandartOpenGlRender {
 private:
     TextRenderer m_textRenderer;
@@ -52,7 +37,6 @@ private:
     int fps = 0;
     int frameCount = 0;
 
-    // Тени
     ShadowMap shadowMap;
     Shader shadowShader;
     Shader mainShader;
@@ -62,6 +46,8 @@ private:
     std::function<void(float)> m_fixedUpdateCallback;
     float m_fixedTimestep = 1.0f / 60.0f;
     float m_accumulator = 0.0f;
+
+    SkyTexture m_skyTexture;
 
 public:
     TextRenderer& getTextRenderer() { return m_textRenderer; }
@@ -97,9 +83,7 @@ public:
 
     void setShadowsEnabled(bool enabled) { shadowsEnabled = enabled; }
 
-    // ОДИН РАЗ - ТОЛЬКО ЗДЕСЬ!
     Camera& getCamera() { return camera; }
-
     SDL_Window* getWindow() { return window; }
     bool isRunning() const { return running; }
     int getFPS() const { return fps; }

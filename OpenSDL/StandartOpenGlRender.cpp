@@ -25,7 +25,7 @@ bool StandartOpenGlRender::init(int width, int height, const char* title) {
     windowWidth = width;
     windowHeight = height;
 
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
+    if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMEPAD)) {
         std::cout << "SDL Error: " << SDL_GetError() << std::endl;
         return false;
     }
@@ -199,7 +199,7 @@ void StandartOpenGlRender::run() {
                 }
             }
 
-            // Захват мыши по правой кнопке (оставляем как запасной вариант)
+            // Захват мыши по правой кнопке
             if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN && event.button.button == SDL_BUTTON_RIGHT) {
                 for (auto& obj : sceneObjects) {
                     CameraObject* cam = dynamic_cast<CameraObject*>(obj.get());
@@ -300,36 +300,31 @@ void StandartOpenGlRender::run() {
         glViewport(0, 0, windowWidth, windowHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // ===== ГРАДИЕНТНЫЙ ФОН =====
+        // ===== НЕБО (ТЕКСТУРА) =====
+        m_skyTexture.render();
+        // ===== ТЕСТ 2D РЕНДЕРА =====
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
-
         glMatrixMode(GL_PROJECTION);
         glPushMatrix();
         glLoadIdentity();
         glOrtho(0, 1, 0, 1, -1, 1);
-
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
         glLoadIdentity();
 
+        glColor3f(1.0f, 0.0f, 0.0f);
         glBegin(GL_QUADS);
-        // Верх (тёмно-синий)
-        glColor3f(0.1f, 0.3f, 0.7f);
-        glVertex2f(0, 0);
-        glVertex2f(1, 0);
-
-        // Низ (светло-голубой)
-        glColor3f(0.5f, 0.7f, 1.0f);
-        glVertex2f(1, 1);
-        glVertex2f(0, 1);
+        glVertex2f(0.1f, 0.1f);
+        glVertex2f(0.3f, 0.1f);
+        glVertex2f(0.3f, 0.3f);
+        glVertex2f(0.1f, 0.3f);
         glEnd();
 
         glPopMatrix();
         glMatrixMode(GL_PROJECTION);
         glPopMatrix();
         glMatrixMode(GL_MODELVIEW);
-
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_LIGHTING);
 

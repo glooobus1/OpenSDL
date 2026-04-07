@@ -1,5 +1,5 @@
 #pragma once
-#include "StandartOpenGlRender.hpp"
+#include "SceneObject.hpp"
 #include "Mesh.hpp"
 
 class Plane : public SceneObject {

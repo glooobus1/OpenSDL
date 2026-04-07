@@ -48,6 +48,9 @@
     <ClCompile Include="PhysicsWorld.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleSDL.hpp">
@@ -140,9 +143,6 @@
     <ClInclude Include="CameraObject.hpp">
       <Filter>StandartOBJ</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleSky.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="SunSprite.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -150,6 +150,15 @@
       <Filter>StandartOBJ</Filter>
     </ClInclude>
     <ClInclude Include="InputController.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyTexture.hpp">
+      <Filter>StandartOBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.hpp">
+      <Filter>StandartOBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

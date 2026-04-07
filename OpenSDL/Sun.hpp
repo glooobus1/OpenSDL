@@ -1,5 +1,5 @@
 #pragma once
-#include "StandartOpenGlRender.hpp"
+#include "SceneObject.hpp"
 #include <GL/glew.h>
 
 class Sun : public SceneObject {
@@ -50,16 +50,15 @@ public:
 
     void update(float deltaTime) override {}
 
-    // ===== ДОБАВИТЬ ЭТИ МЕТОДЫ =====
     mat4 getLightSpaceMatrix() const { return lightSpaceMatrix; }
     void setLightSpaceMatrix(const mat4& m) { lightSpaceMatrix = m; }
     void setOrthoSize(float size) { orthoSize = size; updateLightSpaceMatrix(); }
 
     void setLightColor(const vec3& color) { lightColor = color; }
-    vec3 getLightColor() const { return lightColor; }  // <-- ДОБАВИТЬ
+    vec3 getLightColor() const { return lightColor; }
 
     void setIntensity(float intens) { intensity = intens; }
-    float getIntensity() const { return intensity; }    // <-- ДОБАВИТЬ
+    float getIntensity() const { return intensity; }
 
     void setPosition(const vec3& pos) {
         transform.position = pos;
