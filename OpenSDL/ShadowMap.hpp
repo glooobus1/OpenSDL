@@ -9,9 +9,10 @@ private:
     int width;
     int height;
 
+
 public:
     ShadowMap() : depthMapFBO(0), depthMapTexture(0), width(1024), height(1024) {}
-
+    int getSize() const { return width; }
     bool init(int shadowWidth = 1024, int shadowHeight = 1024) {
         width = shadowWidth;
         height = shadowHeight;

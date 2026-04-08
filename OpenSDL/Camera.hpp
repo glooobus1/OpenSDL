@@ -61,7 +61,7 @@ public:
         if (fovStandard < 10.0f) fovStandard = 10.0f;
         if (fovStandard > 120.0f) fovStandard = 120.0f;
     }
-
+    
     void setAiming(bool aiming) {
         if (aiming) {
             fovOffset = -40.0f;
@@ -70,7 +70,7 @@ public:
             fovOffset = 0.0f;
         }
     }
-
+    vec3 getPosition() const { return transform.position; }
     void addFovOffset(float delta) {
         fovOffset += delta;
         if (fovOffset > 0.0f) fovOffset = 0.0f;
