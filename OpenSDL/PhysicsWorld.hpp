@@ -23,7 +23,7 @@ private:
 public:
     PhysicsWorld();
     ~PhysicsWorld();
-
+    const std::vector<SceneObject*>& getObjects() const { return m_objects; }
     void setGravity(const vec3& g);
     vec3 getGravity() const;
 

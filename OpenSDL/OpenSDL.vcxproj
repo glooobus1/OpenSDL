@@ -150,6 +150,8 @@
     <ClInclude Include="color.hpp" />
     <ClInclude Include="Cube.hpp" />
     <ClInclude Include="DebagLogSystem.hpp" />
+    <ClInclude Include="GPUBuffer.hpp" />
+    <ClInclude Include="GPUPhysics.hpp" />
     <ClInclude Include="InputController.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="mat4.hpp" />
@@ -162,6 +164,7 @@
     <ClInclude Include="SceneObject.hpp" />
     <ClInclude Include="SkyTexture.hpp" />
     <ClInclude Include="SoundSystem.hpp" />
+    <ClInclude Include="StandartPlayerController.hpp" />
     <ClInclude Include="WhiteSphere.hpp" />
     <ClInclude Include="quat.hpp" />
     <ClInclude Include="Rigidbody.hpp" />

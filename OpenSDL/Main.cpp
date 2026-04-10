@@ -1,112 +1,106 @@
 #include "SimpleRenderOpenSDL.h"
-#include "CameraObject.hpp"
+#include "StandartPlayerController.hpp"
 #include "Cube.hpp"
 #include "Plane.hpp"
 #include "Sun.hpp"
 #include "SoundSystem.hpp"
+#include "Camera.hpp"
 
 // Глобальные переменные
 StandartOpenGlRender* g_render = nullptr;
-CameraObject* playerCamera = nullptr;
+StandartPlayerController* g_playerController = nullptr;
 
+// Функция обновления
 void Update(float dt) {
+    if (!g_render || !g_playerController) return;
+
     const bool* keys = SDL_GetKeyboardState(nullptr);
+    g_playerController->update(dt, keys);
 
-    float speed = 15.0f;
-
-    if (keys[SDL_SCANCODE_W]) {
-        g_render->getCamera().move(g_render->getCamera().forward() * speed * dt);
-    }
-    if (keys[SDL_SCANCODE_S]) {
-        g_render->getCamera().move(-g_render->getCamera().forward() * speed * dt);
-    }
-    if (keys[SDL_SCANCODE_A]) {
-        g_render->getCamera().move(-g_render->getCamera().right() * speed * dt);
-    }
-    if (keys[SDL_SCANCODE_D]) {
-        g_render->getCamera().move(g_render->getCamera().right() * speed * dt);
-    }
-
-    if (g_render) {
-        std::string title = "3D Engine | FPS: " + std::to_string(g_render->getFPS());
-        g_render->setWindowTitle(title);
-    }
+    std::string title = "Test Flight | FPS: " + std::to_string(g_render->getFPS());
+    g_render->setWindowTitle(title);
 }
 
 int main() {
-    // ===== СНАЧАЛА ИНИЦИАЛИЗИРУЕМ РЕНДЕР =====
+    // ===== ИНИЦИАЛИЗАЦИЯ РЕНДЕРА =====
     StandartOpenGlRender render;
     g_render = &render;
 
-    if (!render.init(800, 600, "3D Engine - 5 Cubes")) {
+    if (!render.init(800, 600, "Test Flight - Physics Demo")) {
         return -1;
     }
 
     render.setUpdateCallback(Update);
-
     PhysicsWorld& physics = render.getPhysicsWorld();
+    // ===== КАМЕРА И КОНТРОЛЛЕР =====
+    Camera renderCamera;
+    renderCamera.setPosition(vec3(0, 3, 8));
+    renderCamera.lookAt(vec3(0, 0, 0));
 
-    // ===== КАМЕРА =====
-    playerCamera = render.addObject<CameraObject>();
-    playerCamera->init(render.getWindow());
-    playerCamera->setPosition(vec3(0, 3, 8));
-    playerCamera->setMouseLocked(true);
+    render.setCamera(&renderCamera);
 
-    // ===== СОЛНЦЕ (свет) =====
-    Sun* sun = render.addObject<Sun>(vec3(5, 15, 5), vec3(1.0f, 1.0f, 1.0f), 1.2f);
-    sun->rigidbody.setIsStatic(true);
-    physics.addObject(sun);
+    StandartPlayerController playerController;
+    playerController.init(&renderCamera, &physics, render.getWindow(), 800, 600);
+    playerController.setMouseLocked(true);
+    playerController.setMoveSpeed(8.0f);
+    g_playerController = &playerController;
 
-    // ===== ЗЕМЛЯ =====
-    Plane* ground = CreatePlane(render, vec3(0, -1, 0), 100.0f);
-    ground->transform.scale = vec3(20, 1, 20);
+  
+
+    // ===== ПОЛ =====
+    Plane* ground = CreatePlane(render, vec3(0, -1.5f, 0), 20.0f);
+    ground->transform.scale = vec3(15, 1, 15);
     ground->rigidbody.setIsStatic(true);
-    ground->setColliderSize(vec3(20.0f, 0.1f, 20.0f));
+    ground->setColliderSize(vec3(15.0f, 0.1f, 15.0f));
     physics.addObject(ground);
 
-    // ===== 5 КУБОВ =====
-    Cube* cube1 = CreateCube(render, vec3(0, 0, 0), 1.0f);
-    cube1->setColor(Color::red());
-    cube1->rigidbody.setIsStatic(true);
-    physics.addObject(cube1);
+    // Создаём 100x100 сетку кубов (10 000 штук)
+    int gridSize = 9;
+    float spacing = 3;
 
-    Cube* cube2 = CreateCube(render, vec3(-2, 0, 0), 1.0f);
-    cube2->setColor(Color::green());
-    cube2->rigidbody.setIsStatic(true);
-    physics.addObject(cube2);
+    for (int x = -gridSize / 2; x < gridSize / 2; x++) {
+        for (int z = -gridSize / 2; z < gridSize / 2; z++) {
+            Cube* cube = CreateCube(render, vec3(x * spacing, 5, z * spacing), 1.0f);
+            cube->setColor(Color::fromHEX(0x88AAFF));
+            cube->setColliderSize(vec3(1.0f, 1.0f, 1.0f));
+            cube->rigidbody.setIsStatic(false);     // не статичный
+            cube->rigidbody.setUseGravity(true);    // гравитация включена
+            cube->rigidbody.setMass(1.0f);          // масса 1 кг
+            cube->rigidbody.setRestitution(0.5f);   // упругость
+            physics.addObject(cube);                // добавить в физический мир
+        }
+    }
 
-    Cube* cube3 = CreateCube(render, vec3(2, 0, 0), 1.0f);
-    cube3->setColor(Color::blue());
-    cube3->rigidbody.setIsStatic(true);
-    physics.addObject(cube3);
+    // ===== СОЛНЦЕ =====
+    vec3 sunPos = vec3(20, 15, 5);
+    // Солнце (источник света)
+    Sun* sun = render.addObject<Sun>(sunPos, vec3(1.0f, 1.0f, 1.0f), 1.2f);
+    sun->rigidbody.setIsStatic(true);
+    physics.addObject(sun);
+    // Сфера (видимый шар на том же месте)
+    Sphere* sunSphere = render.addObject<Sphere>(2.0f, 32);  // радиус 2, сегменты 32
+    sunSphere->transform.position = sunPos;  // ← ТА ЖЕ ПОЗИЦИЯ, ЧТО И У СОЛНЦА
+    sunSphere->setColor(Color::fromHEX(0xFFAA33));
+    sunSphere->rigidbody.setIsStatic(true);
 
-    Cube* cube4 = CreateCube(render, vec3(0, 2, 0), 1.0f);
-    cube4->setColor(Color::yellow());
-    cube4->rigidbody.setIsStatic(true);
-    physics.addObject(cube4);
-
-    Cube* cube5 = CreateCube(render, vec3(0, 4, 0), 1.0f);
-    cube5->setColor(Color::magenta());
-    cube5->rigidbody.setIsStatic(true);
-    physics.addObject(cube5);
-
-    // ===== ЗВУК (ПОСЛЕ ИНИЦИАЛИЗАЦИИ РЕНДЕРА) =====
+    // ===== МУЗЫКА =====
     SoundSystem audio;
     if (audio.init()) {
-        audio.loadSound("test", audio.setPath("saunds\\edge\\StartEdge.wav"));
-        std::cout << "Воспроизведение звука..." << std::endl;
-        int id = audio.play("test", false, 1.0f);
-
-        // Не ждём здесь - звук будет играть в фоне
-        // audio.update() будет вызываться в игровом цикле, если нужно
-
-        // Если нужно ждать окончания, то делаем это в отдельном потоке или проверяем в Update
-    }
-    else {
-        std::cerr << "Ошибка инициализации звука!" << std::endl;
+        std::string soundPath = audio.setPath("saunds\\edge\\StartEdge.wav");
+        if (audio.loadSound("background", soundPath)) {
+            std::cout << "🎵 Музыка загружена!" << std::endl;
+            audio.play("background", false, 0.7f);
+        }
+        else {
+            std::cout << "Файл не найден: " << soundPath << std::endl;
+        }
     }
 
-    // ===== ЗАПУСК ИГРОВОГО ЦИКЛА =====
+    // ===== ЗАПУСК =====
+    std::cout << "\n=== Управление ===" << std::endl;
+    std::cout << "WASD - движение | Мышь - поворот | Пробел - прыжок" << std::endl;
+    std::cout << "ESC - отпустить мышь | ПКМ - захватить мышь" << std::endl;
+
     render.run();
 
     return 0;
