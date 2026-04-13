@@ -4,8 +4,12 @@
 Создан для авиасимулятора и оптимизирован для работы на школьных ПК
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![OpenGL](https://img.shields.io/badge/OpenGL-3.3%2F4.3-blue)](https://opengl.org)
+[![C++](https://img.shields.io/badge/C++-17%2F20-blue)](https://isocpp.org)
+[![OpenGL](https://img.shields.io/badge/OpenGL-3.3%2F4.3-red)](https://opengl.org)
+[![SDL3](https://img.shields.io/badge/SDL3-3.4.2-orange)](https://github.com/libsdl-org/SDL)
+[![GLEW](https://img.shields.io/badge/GLEW-2.2.0-green)](https://glew.sourceforge.net)
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078d7)](https://microsoft.com)
+[![Visual Studio](https://img.shields.io/badge/VS-2022-purple)](https://visualstudio.microsoft.com)
 
 ---
 
@@ -59,13 +63,20 @@
 
 ---
 
-## 🔧 Сборка
+## 🔧 Системные требования и сборка
 
-### Требования
-- Visual Studio 2022
-- SDL3, GLEW
-- OpenGL 3.3 / 4.3
-- XAudio2 (Windows)
+### Зависимости
+Для сборки проекта необходимы следующие компоненты:
+
+- **Visual Studio 2022** (с установленной нагрузкой для разработки на C++ Desktop)
+- **SDL3 3.4.2** (библиотека для окна, ввода и аудио) — [Скачать](https://github.com/libsdl-org/SDL/releases/tag/release-3.4.2)
+- **GLEW 2.2.0** (библиотека для загрузки OpenGL расширений) — [Скачать](https://glew.sourceforge.net)
+- **OpenGL** (версия 3.3 или выше, драйвер поддерживает)
+
+### Настройка окружения
+1. Распакуйте SDL3 и GLEW в папку `Libs/` в корне проекта.
+2. Откройте решение `OpenSDL.sln` в Visual Studio 2022.
+3. Выберите конфигурацию `Release | x64` и нажмите `Ctrl+Shift+B` для сборки.
 
 ### Шаги сборки
 
