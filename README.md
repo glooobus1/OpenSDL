@@ -9,7 +9,7 @@
 [![SDL3](https://img.shields.io/badge/SDL3-3.4.2-orange)](https://github.com/libsdl-org/SDL)
 [![GLEW](https://img.shields.io/badge/GLEW-2.2.0-green)](https://glew.sourceforge.net)
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078d7)](https://microsoft.com)
-[![Visual Studio](https://img.shields.io/badge/VS-2022-purple)](https://visualstudio.microsoft.com)
+[![Visual Studio](https://img.shields.io/badge/VS-2026-purple)](https://visualstudio.microsoft.com)
 
 ---
 
